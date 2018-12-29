@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>stack--栈</title>
+</head>
+<body> 
+<h2>基本使用</h2>
+<div>
+	<button class="remove">移除</button>
+	<span class="length">0</span>
+	<button class="add">添加</button>
+</div>
+<div>
+	<p>信息：</p>
+	<p class="log"></p>
+</div>
+
+<h2>实际使用--十进制转其他进制</h2>
+<div>
+	<p>
+		<label for="input">输入：</label>
+		<input type="number" class="input" id="input" placeholder="请输入要转换的数值">
+	</p>
+	<p>
+		<label for="base">进制数</label>
+		<input type="number" class="base" id="base" placeholder="请输入进制数">
+	</p>
+	<button class="submit">转换</button>
+	<p >结果：<span class="result"></span></p>
+</div>
+
+<script src="es6/stack.js"></script>
+<script>
+	window.onload = function(){
+		// **************************************************
+		var $removeBtn = document.getElementsByClassName('remove')[0];
+		var $addBtn = document.getElementsByClassName('add')[0];
+		var $length = document.getElementsByClassName('length')[0];
+		var $log = document.getElementsByClassName('log')[0];
+		var stack = new Stack();
+		var num = 1;
+		$removeBtn.addEventListener('click', function(e){
+			if(stack.size()!==0){
+				stack.pop();
+				num--;
+				getLog();
+			}
+		});
+
+		$addBtn.addEventListener('click', function(e){
+			stack.push(num);
+			num++;
+			getLog();
+		});
+
+		function getLog(){
+			$length.innerHTML = stack.size();
+			$log.innerHTML = '栈顶:    '+(stack.peek()|| '空')+'\n'+
+							 '长度:    ' +stack.size()+'\n'+
+							 '是否为空: '+stack.isEmpty()+'\n'+
+							 '打印:     '+stack.print();
+		}
+		// **************************************************
+
+		var $input = document.getElementsByClassName('input')[0];
+		var $base = document.getElementsByClassName('base')[0];
+		var $result = document.getElementsByClassName('result')[0];
+		var $button = document.getElementsByClassName('submit')[0];
+
+		$button.addEventListener('click', function(e){
+			if(!$input.value || !$base.value){
+				alert('请输入对应的数值');
+				return;
+			}
+
+			var result = baseConverter($input.value,$base.value);
+			$result.innerHTML = result;
+		})
+	}
+</script>
+</body>
+</html>
