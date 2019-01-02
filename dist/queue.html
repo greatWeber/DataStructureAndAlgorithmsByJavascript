@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>queue--队列</title>
+</head>
+<body> 
+<h2>基本队列</h2>
+<div>
+	<button class="remove">移除</button>
+	<button class="add">添加</button>
+	<input type="text" class="input" style="width: 100px;"></span>
+</div>
+<div>
+	<p>信息：</p>
+	<p class="log"></p>
+</div>
+
+
+<script src="es6/queue.js"></script>
+<script>
+	window.onload = function(){
+		
+		var $removeBtn = document.getElementsByClassName('remove')[0];
+		var $addBtn = document.getElementsByClassName('add')[0];
+		var $input = document.getElementsByClassName('input')[0];
+		var $log = document.getElementsByClassName('log')[0];
+		var queue = new Queue();
+		var num = 1;
+		$removeBtn.addEventListener('click', function(e){
+			if(queue.size()!==0){
+				queue.dequeue();
+				getLog();
+			}
+		});
+
+		$addBtn.addEventListener('click', function(e){
+			if(!$input.value){
+				alert('请输入内容');
+				return;
+			}
+			queue.enqueue($input.value);
+			getLog();
+		});
+
+		function getLog(){
+			$log.innerHTML = '队列top:    '+(queue.front()|| '空')+'\n'+
+							 '长度:    ' +queue.size()+'\n'+
+							 '是否为空: '+queue.isEmpty()+'\n'+
+							 '打印:     '+queue.print();
+		}
+	}
+</script>
+</body>
+</html>
