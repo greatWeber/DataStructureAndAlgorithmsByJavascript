@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>linkedList--链表</title>
+</head>
+<body> 
+<h2>链表</h2>
+<div>
+	<p>
+		<button class="add">添加</button>
+		<input type="text" class="input" style="width: 100px;" placeholder="请输入内容">
+		
+	</p>
+	<p>
+		<button class="insert">插入</button>
+		<input type="number" class="insert-key" style="width: 100px;" placeholder="请输入索引">
+		<input type="text" class="insert-val" style="width: 100px;" placeholder="请输入内容">
+		
+	</p>
+	<p>
+		<button class="removeAt">根据索引移除</button>
+		<input type="number" class="removeAt-input" style="width: 100px;" placeholder="请输入内容">
+		
+	</p>
+	<p>
+		<button class="remove">移除元素</button>
+		<input type="text" class="remove-input" style="width: 100px;" placeholder="请输入内容">
+		
+	</p>
+</div>
+<div>
+	<p>信息：</p>
+	<p class="log"></p>
+</div>
+
+
+<script src="es6/linkedList.js"></script>
+<script>
+	window.onload = function(){
+		
+		
+		var $addBtn = document.getElementsByClassName('add')[0];
+		var $input = document.getElementsByClassName('input')[0];
+
+		var $insert = document.getElementsByClassName('insert')[0];
+		var $insertKey = document.getElementsByClassName('insert-key')[0];
+		var $insertVal = document.getElementsByClassName('insert-val')[0];
+
+
+		var $removeAt = document.getElementsByClassName('removeAt')[0];
+		var $removeAtInput = document.getElementsByClassName('removeAt-input')[0];
+
+		var $remove = document.getElementsByClassName('remove')[0];
+		var $removeInput = document.getElementsByClassName('remove-input')[0];
+
+		var $log = document.getElementsByClassName('log')[0];
+		var linked = new LinkedList();
+		$removeAt.addEventListener('click', function(e){
+			if(!$removeAtInput.value){
+				alert('请输入要删除的索引')
+				return;
+			}
+			linked.removeAt($removeAtInput.value);
+			getLog();
+		});
+
+		$remove.addEventListener('click', function(e){
+			if(!$removeInput.value){
+				alert('请输入要删除的元素')
+				return;
+			}
+			linked.remove($removeInput.value);
+			getLog();
+		});
+
+		$addBtn.addEventListener('click', function(e){
+			if(!$input.value){
+				alert('请输入添加的内容');
+				return;
+			}
+			linked.append($input.value);
+			getLog();
+		});
+
+		$insert.addEventListener('click', function(e){
+			if(!$insertKey.value&&!$insertVal.value){
+				alert('请输入插入的内容及索引');
+				return;
+			}
+
+			linked.insert($insertKey.value, $insertVal.value);
+			getLog();
+		})
+
+		function getLog(){
+			$log.innerHTML = '链表top:    '+(JSON.stringify(linked.getHead())|| '空')+'\n'+
+							 '长度:    ' +linked.size()+'\n'+
+							 '是否为空: '+linked.isEmpty()+'\n'+
+							 '打印:     '+linked.toString();
+		}
+	}
+</script>
+</body>
+</html>
