@@ -2,7 +2,7 @@
 * @Author: greatWeber
 * @Date:   2019-01-03 10:36:52
 * @Last Modified by:   greatWeber
-* @Last Modified time: 2019-01-03 11:40:35
+* @Last Modified time: 2019-01-04 09:10:03
 */
 
 class Node{
@@ -51,7 +51,6 @@ class LinkedList{
 			}else {
 				while(index++ < position){
 					previous = current;
-					console.log(current);
 					current = current.next;
 				}
 				node.next = current;

@@ -4,63 +4,65 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/* 模拟链表
+/*模拟双向链表
 * @Author: greatWeber
-* @Date:   2019-01-03 10:36:52
+* @Date:   2019-01-04 09:32:27
 * @Last Modified by:   greatWeber
-* @Last Modified time: 2019-01-04 09:10:03
+* @Last Modified time: 2019-01-04 10:44:00
 */
 
 var Node = function Node(elm) {
 	_classCallCheck(this, Node);
 
 	this.element = elm;
+	this.prev = null;
 	this.next = null;
 };
 
-var LinkedList = function () {
-	function LinkedList() {
-		_classCallCheck(this, LinkedList);
+var DoublyLinkedList = function () {
+	function DoublyLinkedList() {
+		_classCallCheck(this, DoublyLinkedList);
 
 		this.length = 0;
 		this.head = null;
+		this.tail = null; //指向最后一个元素
 	}
 
-	_createClass(LinkedList, [{
+	_createClass(DoublyLinkedList, [{
 		key: 'append',
 		value: function append(elm) {
 			// 添加
 			var node = new Node(elm);
-			var current = void 0;
-
-			if (this.head === null) {
-				//列表中的第一个元素
+			var current = this.head;
+			if (this.length == 0) {
 				this.head = node;
+				this.tail = node;
 			} else {
-				// 循环找到最后一个元素
-				current = this.head;
-				while (current.next) {
-					current = current.next;
-				}
-
+				current = this.tail;
 				current.next = node;
+				node.prev = current;
+				this.tail = node;
 			}
 			this.length++;
 		}
 	}, {
 		key: 'insert',
 		value: function insert(position, elm) {
-			// 插入元素
+			var node = new Node(elm);
 			if (position > -1 && position <= this.length) {
-				//边界判断
-				var node = new Node(elm);
-				var previous = void 0,
-				    current = this.head,
-				    index = 0;
+				var current = this.head;
+				var previous = void 0;
+				var index = 0;
 				if (position == 0) {
-					//第一个元素
-					node.next = current;
-					this.head = node;
+					if (!this.head) {
+						//新增
+						this.head = node;
+						this.tail = node;
+					} else {
+						current.prev = node;
+						node.next = current;
+						this.head = node;
+					}
 					this.length++;
 				} else if (position == this.length) {
 					this.append(elm);
@@ -69,11 +71,13 @@ var LinkedList = function () {
 						previous = current;
 						current = current.next;
 					}
-					node.next = current;
 					previous.next = node;
+					node.prev = previous;
+
+					node.next = current;
+					current.prev = node;
 					this.length++;
 				}
-
 				return true;
 			} else {
 				return false;
@@ -82,19 +86,32 @@ var LinkedList = function () {
 	}, {
 		key: 'removeAt',
 		value: function removeAt(position) {
-			// 根据索引移除元素
+			if (this.length == 0) return false;
 			if (position > -1 && position <= this.length) {
-				var current = this.head;
-				var previous = void 0,
-				    index = 0;
+				var current = void 0;
 				if (position == 0) {
-					this.head = current.next;
+					if (this.length == 1) {
+						this.tail = null;
+						this.head = null;
+					} else {
+						current = this.head.next;
+						current.prev = null;
+						this.head = current;
+					}
+				} else if (position == this.length) {
+					current = this.tail.prev;
+					current.next = null;
+					this.tail = current;
 				} else {
+					var index = 0;
+					var previous = void 0;
+					current = this.head;
 					while (index++ < position) {
 						previous = current;
 						current = current.next;
 					}
 					previous.next = current.next;
+					current.next.prev = previous;
 				}
 				this.length--;
 				return true;
@@ -105,9 +122,8 @@ var LinkedList = function () {
 	}, {
 		key: 'indexOf',
 		value: function indexOf(elm) {
-			// 返回查找元素的位置
-			var current = this.head;
-			var index = 0;
+			var current = this.head,
+			    index = 0;
 			while (current) {
 				if (elm === current.element) {
 					return index;
@@ -115,13 +131,10 @@ var LinkedList = function () {
 				index++;
 				current = current.next;
 			}
-
-			return -1;
 		}
 	}, {
 		key: 'remove',
 		value: function remove(elm) {
-			// 移除某元素
 			var index = this.indexOf(elm);
 			return this.removeAt(index);
 		}
@@ -141,11 +154,15 @@ var LinkedList = function () {
 			return this.head;
 		}
 	}, {
+		key: 'getTail',
+		value: function getTail() {
+			return this.tail;
+		}
+	}, {
 		key: 'toString',
 		value: function toString() {
-			// 打印
-			var current = this.head;
 			var string = '';
+			var current = this.head;
 			while (current) {
 				string += current.element + '-->';
 				current = current.next;
@@ -154,5 +171,5 @@ var LinkedList = function () {
 		}
 	}]);
 
-	return LinkedList;
+	return DoublyLinkedList;
 }();

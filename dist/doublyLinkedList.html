@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>linkedList--链表</title>
+	<title>doublyLinkedList--双向链表</title>
 </head>
 <body> 
-<h2>链表</h2>
+<h2>双向链表</h2>
 <div>
 	<p>
 		<button class="add">添加</button>
@@ -35,7 +35,7 @@
 </div>
 
 
-<script src="es6/linkedList.js"></script>
+<script src="es6/doublyLinkedList.js"></script>
 <script>
 	window.onload = function(){
 		
@@ -55,7 +55,7 @@
 		var $removeInput = document.getElementsByClassName('remove-input')[0];
 
 		var $log = document.getElementsByClassName('log')[0];
-		var linked = new LinkedList();
+		var linked = new DoublyLinkedList();
 		$removeAt.addEventListener('click', function(e){
 			if(!$removeAtInput.value){
 				alert('请输入要删除的索引')
@@ -94,8 +94,7 @@
 		})
 
 		function getLog(){
-			$log.innerHTML = '<p>链表top:    '+(JSON.stringify(linked.getHead())|| '空')+'</p>\n'+
-							 '<p>长度:    ' +linked.size()+'</p>\n'+
+			$log.innerHTML = '<p>长度:    ' +linked.size()+'</p>\n'+
 							 '<p>是否为空: '+linked.isEmpty()+'</p>\n'+
 							 '<p>打印:     '+linked.toString()+'</p>';
 		}
