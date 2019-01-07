@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>set--集合</title>
+</head>
+<body> 
+<h2>基本集合</h2>
+<div>
+	<button class="add1">添加到A集合</button>
+	<input type="text" class="input1" style="width: 100px;"></span>
+	<button class="remove1">从A集合移除</button>
+</div>
+
+<div>
+	<button class="add2">添加到B集合</button>
+	<input type="text" class="input2" style="width: 100px;"></span>
+	<button class="remove2">从B集合移除</button>
+</div>
+<div>
+	<p>信息：</p>
+	<p class="log"></p>
+</div>
+
+
+<script src="es6/set.js"></script>
+<script>
+	window.onload = function(){
+		
+		var $removeBtn1 = document.getElementsByClassName('remove1')[0];
+		var $addBtn1 = document.getElementsByClassName('add1')[0];
+		var $input1 = document.getElementsByClassName('input1')[0];
+
+		var $removeBtn2 = document.getElementsByClassName('remove2')[0];
+		var $addBtn2 = document.getElementsByClassName('add2')[0];
+		var $input2 = document.getElementsByClassName('input2')[0];
+
+
+		var $log = document.getElementsByClassName('log')[0];
+		var A = new Set();
+		var B = new Set();
+		$removeBtn1.addEventListener('click', function(e){
+			if(!$input1.value){
+				alert('请输入内容');
+				return;
+			}
+			A.remove($input1.value);
+			getLog();
+
+		});
+
+		$addBtn1.addEventListener('click', function(e){
+			if(!$input1.value){
+				alert('请输入内容');
+				return;
+			}
+			A.add($input1.value);
+			getLog();
+		});
+
+		$removeBtn2.addEventListener('click', function(e){
+			if(!$input2.value){
+				alert('请输入内容');
+				return;
+			}
+			B.remove($input2.value);
+			getLog();
+
+		});
+
+		$addBtn2.addEventListener('click', function(e){
+			if(!$input2.value){
+				alert('请输入内容');
+				return;
+			}
+			B.add($input2.value);
+			getLog();
+		});
+
+
+		function getLog(){
+			$log.innerHTML = '<p>集合A:    '+(A.toString()|| '空')+'</p>\n'+
+							 '<p>集合B:    '+(B.toString()|| '空')+'</p>\n'+
+							 '<p>A,B并集: '+(A.union(B).toString()|| '空')+'</p>\n'+
+							 '<p>A,B交集: '+(A.intersection(B).toString()|| '空')+'</p>\n'+
+							 '<p>A,B差集: '+(A.difference(B).toString()|| '空')+'</p>\n'+
+							 '<p>A是B的子集？: '+A.subset(B)+'</p>\n';
+		}
+	}
+</script>
+</body>
+</html>
